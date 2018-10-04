@@ -1,3 +1,7 @@
 # brainwave2018-1
-阿部ですよろしくお願いします
-中川智貴(nakatomotoi)
+
+メンバー
+・阿部広暉(falfal07)
+・中川智貴(nakatomotoi)
+・
+
