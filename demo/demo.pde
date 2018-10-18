@@ -2,54 +2,37 @@ import oscP5.*;
 import netP5.*;
 
 final int N_CHANNELS = 4;
-final int BUFFER_SIZE = 220;
-final float MAX_MICROVOLTS = 1682.815;
 final float DISPLAY_SCALE = 200.0;
-final String[] LABELS = new String[] {
-  "TP9", "FP1", "FP2", "TP10"
-};
 
 final color BG_COLOR = color(255, 255, 255);
-final color AXIS_COLOR = color(255, 0, 0);
-final color GRAPH_COLOR = color(0, 0, 255);
-final color LABEL_COLOR = color(255, 255, 0);
-final int LABEL_SIZE = 21;
 
 final int PORT = 5000;
 OscP5 oscP5 = new OscP5(this, PORT);
 
-float[][] buffer = new float[N_CHANNELS][BUFFER_SIZE];
-int pointer = 0;
-float[] offsetX = new float[N_CHANNELS];
-float[] offsetY = new float[N_CHANNELS];
+float[] buffer = new float[N_CHANNELS];
 
 
 void setup(){
   size(1000, 600);
   frameRate(30);
-  smooth();
-  for(int ch = 0; ch < N_CHANNELS; ch++){
-    offsetX[ch] = (width / N_CHANNELS) * ch + 15;
-    offsetY[ch] = height / 2;
-  }
   PFont font = createFont("MS Gothic",48,true);
   textFont(font); 
   textSize(100);
   fill(0,0,0);
+  textAlign(CENTER);
 }
 
 void draw(){
-  
-  
+  background(BG_COLOR);
   if(sleeping){
-    text("sleeping",100,100);
+    text("sleeping",500,300);
   }else{
-    test("awaking",100,100);
+    text("awaking",500,300);
   }
   for (int ch = 0;ch < N_CHANNELS; ch++){
-    for (int point = 0; point < BUFFER_SIZE; point++){
-      text(buffer[ch][point],100,100);
-    }
+    textSize(50);
+    text(ch,50+ch*200,50);
+    text(buffer[ch],100+ch*200,100);
   }
 }
 
@@ -58,28 +41,24 @@ void oscEvent(OscMessage msg){
   if(msg.checkAddrPattern("/muse/elements/alpha_relative")){
     for(int ch = 0; ch < N_CHANNELS; ch++){
       data = msg.get(ch).floatValue();
-      buffer[ch][pointer] = data;
+      buffer[ch] = data;
     }
-    pointer = (pointer + 1) % BUFFER_SIZE;
   }
 }
 
 //added below
 
 boolean sleeping = false;
-
 final float threshold = 0.1;
 
 
 void IsSleeping(){
   for (int ch = 0;ch < N_CHANNELS; ch++){
-    for (int point = 0; point < BUFFER_SIZE; point++){
-      if(buffer[ch][point] > threshold){
-        sleeping = true;
-        break;
-      }else{
-        sleeping = false;
-      }
+    if(buffer[ch] > threshold){
+      sleeping = true;
+      break;
+    }else{
+      sleeping = false;
     }
   }
 }
