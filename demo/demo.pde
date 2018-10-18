@@ -15,14 +15,13 @@ float[] buffer = new float[N_CHANNELS];
 void setup(){
   size(1000, 600);
   frameRate(30);
-  PFont font = createFont("MS Gothic",48,true);
-  textFont(font); 
   textSize(100);
   fill(0,0,0);
   textAlign(CENTER);
 }
 
 void draw(){
+  IsSleeping();
   background(BG_COLOR);
   if(sleeping){
     text("sleeping",500,300);
@@ -33,6 +32,7 @@ void draw(){
     textSize(50);
     text(ch,50+ch*200,50);
     text(buffer[ch],100+ch*200,100);
+    println(ch+"----"+buffer[ch]);
   }
 }
 
@@ -49,7 +49,7 @@ void oscEvent(OscMessage msg){
 //added below
 
 boolean sleeping = false;
-final float threshold = 0.1;
+final float threshold = 0.2;
 
 
 void IsSleeping(){
