@@ -35,6 +35,13 @@ void setup(){
 }
 
 void draw(){
+  
+  
+  if(sleeping){
+    text("sleeping",50,50);
+  }
+  
+  
   float x1, y1, x2, y2;
   background(BG_COLOR);
   for(int ch = 0; ch < N_CHANNELS; ch++){
