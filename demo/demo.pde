@@ -43,15 +43,21 @@ void draw(){
   
   if(sleeping){
     text("sleeping",100,100);
+  }else{
+    test("awaking",100,100);
+  }
+  for (int ch = 0;ch < N_CHANNELS; ch++){
+    for (int point = 0; point < BUFFER_SIZE; point++){
+      text(buffer[ch][point],100,100);
+    }
   }
 }
 
 void oscEvent(OscMessage msg){
   float data;
-  if(msg.checkAddrPattern("/muse/eeg")){
+  if(msg.checkAddrPattern("/muse/elements/alpha_relative")){
     for(int ch = 0; ch < N_CHANNELS; ch++){
       data = msg.get(ch).floatValue();
-      data = (data - (MAX_MICROVOLTS / 2)) / (MAX_MICROVOLTS / 2); // -1.0 1.0
       buffer[ch][pointer] = data;
     }
     pointer = (pointer + 1) % BUFFER_SIZE;
@@ -61,7 +67,8 @@ void oscEvent(OscMessage msg){
 //added below
 
 boolean sleeping = false;
-final float threshold = 0.4;
+
+final float threshold = 0.1;
 
 
 void IsSleeping(){
