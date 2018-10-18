@@ -67,6 +67,7 @@ void oscEvent(OscMessage msg){
 //added below
 
 boolean sleeping = false;
+
 final float threshold = 0.1;
 
 
