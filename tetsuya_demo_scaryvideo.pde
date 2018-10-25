@@ -20,7 +20,7 @@ void setup(){
   frameRate(30);
   PFont font = createFont("MS Gothic",48,true);
   textFont(font); 
-  textSize(100);
+  textSize(50);
   fill(0,0,0);
   textAlign(CENTER);
   t_start = millis();
