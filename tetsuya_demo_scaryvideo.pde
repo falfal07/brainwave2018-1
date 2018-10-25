@@ -44,7 +44,6 @@ void draw(){
     t = (millis() - t_start)/1000;
     text("sleeping time:"+t ,400,300);
     if ( t >= 10 ){
-      fullScreen();
       background(0);
       delay(2500);
       link("https://www.youtube.com/watch?v=-o-eyRMVOaw");
