@@ -48,8 +48,8 @@ void draw(){
       background(0);
       delay(2500);
       link("https://www.youtube.com/watch?v=-o-eyRMVOaw");
+      t = 0;
     }
-  noLoop();
   }
 }
 
