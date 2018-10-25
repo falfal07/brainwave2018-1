@@ -9,10 +9,7 @@ import twitter4j.conf.*;
 import java.util.*;
 
 class Tweet{
-  String consumerKey = "FGUeIDShwT27DlQys5wt4WZeg";
-  String consumerSecret = "q0PkewxReTPWNh5GAqe85GCxg3bxOoVWLURA18NZOkqga2R6TF";
-  String accessToken = "714992711489589248-wIKBMstixNoVxsjUqqy4YZhTNa7N81B";
-  String accessTokenSecret = "vAiyMV9D8hhJv3rbQQYhHz0x21oak58qw7CTcOUdI5sV9";
+  //
    
   Twitter twitter;
   List<Status> statuses = null;
