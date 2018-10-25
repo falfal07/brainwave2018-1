@@ -43,7 +43,7 @@ void draw(){
   if (sleeping){
     t = (millis() - t_start)/1000;
     text("sleeping time:"+t ,400,300);
-    if ( t >= 10 ){
+    if ( t = 10 ){
       background(0);
       delay(2500);
       link("https://www.youtube.com/watch?v=-o-eyRMVOaw");
@@ -64,7 +64,7 @@ void oscEvent(OscMessage msg){
  
 //added below
 boolean sleeping = false;
-final float threshold = 0.1;
+final float threshold = 0.2;
  void IsSleeping(){
    for (int ch = 0;ch < N_CHANNELS; ch++){
      if(buffer[ch] > threshold){
