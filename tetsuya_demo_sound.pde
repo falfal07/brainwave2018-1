@@ -47,9 +47,8 @@ void setup(){
   if (sleeping){
      t = (millis() - t_start)/1000;
      text("sleeping time:"+t ,400,300);
-     if ( t >= 10 ){
+     if ( t = 10 ){
        player.play();
-       fullScreen();
        background(255);
        frameRate(109);
        int x = int(random(0,width/24));
