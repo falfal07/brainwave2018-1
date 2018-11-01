@@ -6,16 +6,15 @@ Sleep sleep = new Sleep();
 Minim minim = new Minim(this);
 AudioPlayer player;
 
-ControlP5 cp5;
 int hour = hour();
 int minute = minute();
 String hour_disp = "";
 String minute_disp = "";
 int on_off = 0;
-int check = 0; //change of on_off
+int check = 0; //memory of on_off
+int check_check=0; //change of on_off
 
 void setup(){
-  size(400, 340);
   size(400, 740);
   rectMode(CENTER);
   
@@ -50,7 +49,7 @@ void setup(){
 }
 
 void draw(){
-  frameRate(1);
+  //frameRate(1);
   background(128);
   stroke(255);
   
@@ -61,7 +60,6 @@ void draw(){
   show_number(hour,85,170);
   show_number(minute,245,170);
   
-  if(hour == hour() && minute == minute() && on_off==0){
 
   if(sleep.sleeping==false){
     textSize(50);
@@ -75,8 +73,7 @@ void draw(){
     sleep.IsSleeping();
 
     textSize(50);
-    text("wakeup!", width/2-80,height/2-25);
-    text("on_off = " + on_off, width/2-80,height/2+130);
+    text("on_off = " + on_off, width/2-80,height/2+150);
 
     textSize(50);
     text("check = " + check, width/2-80,height/2+200);
@@ -84,18 +81,31 @@ void draw(){
   if(check != on_off){
     textSize(50);
     text("changed", width/2-80,height/2+100);
+    check_check++;
     check = on_off;
   }
-
-  if(hour == hour() && minute == minute() && on_off==0 && sleep.sleeping==true){
+    textSize(50);
+    text(check_check, width/2-80,height/2+250);
+    
+  int ringing = 0;
+  
+  if(ringing==1&&check_check==1){
+    player.pause();
+    player.close();
+    minim.stop();
+    super.stop();
+    ringing=0;
+  }
+  if(hour == hour() && minute == minute() && on_off==0){
     textSize(50);
     text("wakeup!", width/2-80,height/2+50);
+    ringing = 1;
     player = minim.loadFile("Alarm1.mp3");
     player.play();
-      
   }
   
 
+  check_check=0;
 }
 
 void show_number(int a,int x,int y){
