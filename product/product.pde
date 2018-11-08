@@ -26,7 +26,7 @@ void button1(){
   println("clicked");
 }
 void button2(){
-  launch("/Users/nakatomo/Desktop/lecture/3a/応用プロジェクト/brainwave2018-1/base/base.pde");
+  launch("/tetsuya_UI/tetsuya_UI.pde");
   println("clicked");
   
 }
