@@ -63,38 +63,38 @@ void draw(){
   
   if(hour == hour() && minute == minute() && on_off==0){
 
-  if(sleep.sleeping==false){
-    textSize(50);
-    text("waking", width/2-80,height/2-25);
-  }
-
-    float a = sleep.buffer[2];
-    textSize(50);
-    text(a, width/2-80,height/2+25);
-    
-    sleep.IsSleeping();
-
-    textSize(50);
-    text("wakeup!", width/2-80,height/2-25);
-    text("on_off = " + on_off, width/2-80,height/2+130);
-
-    textSize(50);
-    text("check = " + check, width/2-80,height/2+200);
-
-  if(check != on_off){
-    textSize(50);
-    text("changed", width/2-80,height/2+100);
-    check = on_off;
-  }
-
-  if(hour == hour() && minute == minute() && on_off==0 && sleep.sleeping==true){
-    textSize(50);
-    text("wakeup!", width/2-80,height/2+50);
-    player = minim.loadFile("Alarm1.mp3");
-    player.play();
-      
-  }
+    if(sleep.sleeping==false){
+      textSize(50);
+      text("waking", width/2-80,height/2-25);
+    }
   
+      float a = sleep.buffer[2];
+      textSize(50);
+      text(a, width/2-80,height/2+25);
+      
+      sleep.IsSleeping();
+  
+      textSize(50);
+      text("wakeup!", width/2-80,height/2-25);
+      text("on_off = " + on_off, width/2-80,height/2+130);
+  
+      textSize(50);
+      text("check = " + check, width/2-80,height/2+200);
+  
+    if(check != on_off){
+      textSize(50);
+      text("changed", width/2-80,height/2+100);
+      check = on_off;
+    }
+  
+    if(hour == hour() && minute == minute() && on_off==0 && sleep.sleeping==true){
+      textSize(50);
+      text("wakeup!", width/2-80,height/2+50);
+      player = minim.loadFile("Alarm1.mp3");
+      player.play();
+        
+    }
+  }
 
 }
 
