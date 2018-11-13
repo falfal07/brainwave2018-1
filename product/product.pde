@@ -22,11 +22,8 @@ void draw(){
 }
 
 void button1(){
-  //launch("/alarm_UI/alarm_UI.pde");
-  println("clicked");
+  launch(sketchPath()+"/tetsuya_UI/application.macosx/tetsuya_UI.app");
 }
 void button2(){
-  launch("/tetsuya_UI/tetsuya_UI.pde");
-  println("clicked");
-  
+  launch(sketchPath()+"/alarm_UI/alarm_UI.pde");
 }
