@@ -2,138 +2,146 @@ import controlP5.*;
 import ddf.minim.*;
 
 ControlP5 cp5;
-Sleep sleep = new Sleep();
-Minim minim = new Minim(this);
+Minim minim;
 AudioPlayer player;
+Sleep sleep = new Sleep();
 
-ControlP5 cp5;
+boolean Alarm;
+int gain0 = -30;
+boolean already_set = false;
+
 int hour = hour();
 int minute = minute();
-String hour_disp = "";
-String minute_disp = "";
-int on_off = 0;
-int check = 0; //change of on_off
+
+int pass = 0;
 
 void setup(){
-  size(400, 340);
-  size(400, 740);
+  size(400,400);
   rectMode(CENTER);
-  
+  textAlign(CENTER,CENTER);
+
   cp5 = new ControlP5(this);
+  minim = new Minim(this);
+  player = minim.loadFile("Alarm1.mp3");
+  player.setGain(gain0);
   
+  int s2 = 15;
+  int x0 = width/2-s2/2;
+  int y3 = 250-s2/2; int r2 = 14; int r3 = r2+17;
+
   cp5.addButton("hour_plus")
      .setLabel("+")
-     .setPosition(125, 210)
-     .setSize(20, 20);
+     .setPosition(x0-r2, y3)
+     .setSize(s2, s2);
      
   cp5.addButton("hour_minus")
      .setLabel("-")
-     .setPosition(90, 210)
-     .setSize(20, 20);
+     .setPosition(x0-r3, y3)
+     .setSize(s2, s2);
   
   cp5.addButton("minute_plus")
      .setLabel("+")
-     .setPosition(285, 210)
-     .setSize(20, 20);
+     .setPosition(x0+r3, y3)
+     .setSize(s2, s2);
      
   cp5.addButton("minute_minus")
      .setLabel("-")
-     .setPosition(250, 210)
-     .setSize(20, 20);
-     
-  cp5.addToggle("set_alarm")
-     .setLabel("Set")
-     .setValue(on_off)
-     .setPosition(width/2-30, height/2+80)
-     .setPosition(width/2-30, (height-400)/2+80)
-     .setSize(60, 40);
+     .setPosition(x0+r2, y3)
+     .setSize(s2, s2);
+  
+  int y4 = y3+30-s2/2;
+  cp5.addToggle("Alarm")
+    .setValue(false)
+    .setLabel("Alarm")
+    .setPosition(x0,y4)
+    .setSize(15,15);
 }
 
 void draw(){
-  frameRate(1);
+  frameRate(60);
   background(128);
   stroke(255);
   
-  rect(120, 150, 100, 100);
-  rect(280, 150, 100, 100);
-  noFill();
-  textSize(60);
-  show_number(hour,85,170);
-  show_number(minute,245,170);
-  
-  if(hour == hour() && minute == minute() && on_off==0){
 
-    if(sleep.sleeping==false){
-      textSize(50);
-      text("waking", width/2-80,height/2-25);
+  int y1 = 150; int r1 = 100; int s1 = 90;
+  int y2 = y1+70;
+  
+  int x0 = width/2;
+  rect(x0-r1,y1,s1,s1);
+  rect(x0,y1,s1,s1);
+  rect(x0+r1,y1,s1,s1);
+  textSize(50);
+  text(disp_num(hour()),x0-r1,y1);
+  text(disp_num(minute()),x0,y1);
+  text(disp_num(second()),x0+r1,y1);
+  
+  textSize(30);
+  text(disp_num(hour)+":"+disp_num(minute),x0,y2);
+  
+
+
+  sleep.IsSleeping();
+  
+
+  //text(str(player.getGain()),50,70);
+  if((Alarm&&hour==hour()&&minute==minute()) || (sleep.sleeping&&already_set)){
+    if(already_set==false){
+      already_set=true;
     }
-  
-      float a = sleep.buffer[2];
-      textSize(50);
-      text(a, width/2-80,height/2+25);
-      
-      sleep.IsSleeping();
-  
-      textSize(50);
-      text("wakeup!", width/2-80,height/2-25);
-      text("on_off = " + on_off, width/2-80,height/2+130);
-  
-      textSize(50);
-      text("check = " + check, width/2-80,height/2+200);
-  
-    if(check != on_off){
-      textSize(50);
-      text("changed", width/2-80,height/2+100);
-      check = on_off;
-    }
-  
-    if(hour == hour() && minute == minute() && on_off==0 && sleep.sleeping==true){
-      textSize(50);
-      text("wakeup!", width/2-80,height/2+50);
-      player = minim.loadFile("Alarm1.mp3");
+
+    player.play();
+    text("overslept:"+str((player.position()+pass*player.length())/1000),100,70);
+    if(player.position()==player.length()){
+      pass++;
+      player.setGain(player.getGain()+12);
+      player.rewind();
       player.play();
-        
     }
   }
+  else{
+    player.setGain(gain0);
+    noFill();
+    player.pause();
+    player.rewind();
+    pass = 0;
+  }
+} 
 
-}
-
-void show_number(int a,int x,int y){
-  if(a<10)
-    text("0" + str(a),x,y);
+String disp_num(int num){
+  if(num<10){
+    return "0"+str(num);
+  }
   else
-    text(str(a),x,y);
+    return str(num);
 }
 
 void hour_plus(){
   hour++;
-  if(hour>23){
+  if(hour>23)
     hour -= 24;
-  }
+  already_set=false;
 }
 void hour_minus(){
   hour--;
-  if(hour<0){
+  if(hour<0)
     hour += 24;
-  }
+  already_set=false;
 }
 void minute_plus(){
   minute++;
-  if(minute>59){
+  if(minute>59)
     minute -= 60;
-  }
+  already_set=false;    
 }
 void minute_minus(){
   minute--;
-  if(minute<0){
+  if(minute<0)
     minute += 60;
-  }
+  already_set=false;
 }
-void set_alarm(){
-  on_off++;
-  if(on_off>1)
-    on_off -= 2;
-  if(on_off==1)
-    fill(255);
 
+void stop(){
+  player.close();
+  minim.stop();
+  super.stop();
 }
