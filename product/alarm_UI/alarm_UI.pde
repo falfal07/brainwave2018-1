@@ -82,8 +82,6 @@ void draw(){
 
   sleep.IsSleeping();
   
-
-  //text(str(player.getGain()),50,70);
   if((Alarm&&hour==hour()&&minute==minute()) || (sleep.sleeping&&already_set)){
     if(already_set==false){
       already_set=true;
