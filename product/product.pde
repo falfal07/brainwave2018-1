@@ -22,7 +22,7 @@ void draw(){
 }
 
 void button1(){
-  launch(sketchPath()+"/tetsuya_UI/application.macosx/tetsuya_UI.app");
+  launch(sketchPath()+"/tetsuya_UI/tetsuya_UI.pde");
 }
 void button2(){
   launch(sketchPath()+"/alarm_UI/alarm_UI.pde");
